@@ -47,7 +47,8 @@ def is_sha1(s):
     """
     Returns ``True`` if the string is a SHA1 hash
     """
-    return bool(sha1_re.match(s))
+    #return bool(sha1_re.match(s))
+    return True
 
 def validate_response(response):
     """
@@ -192,6 +193,12 @@ class Message(AttrDict):
         Moves this message to the Trash. Use ``message.delete(0)`` to move it out of the Trash.
         """
         self.folder.voice.__messages_post('delete', self.id, trash=trash)
+
+    def deleteForever(self):
+        """
+        Deletes this message forever, regardless of being in the trash.  There is no undo.
+        """
+        self.folder.voice.__messages_post('deleteForever', self.id)
 
     def star(self, star=1):
         """
